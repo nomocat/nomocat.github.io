@@ -1,1 +1,1 @@
-<iframe src="./index.html" width="600" height="400"></iframe>
+<iframe src="./chat.html" width="100vw" height="100vh"></iframe>
