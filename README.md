@@ -1,48 +1,22 @@
-[![Online version](https://img.shields.io/website?down_message=down%20%F0%9F%92%A4&label=online%20version&style=flat-square&up_message=running%20%F0%9F%A6%96&url=https%3A%2F%2Flitetex.github.io%2Ft-rex-runner%2F)](https://litetex.github.io/t-rex-runner/)
-[![Latest stable docker version](https://img.shields.io/badge/docker-latest-%232684ff?style=flat-square)](https://hub.docker.com/r/litetex/t-rex-runner/tags?name=latest)
+## MaoDie-Runner 🦖
 
-## t-rex-runner 🦖
+This is an updated and modified version of the t-rex-runner game, originally extracted by [wayou/t-rex-runner](https://github.com/wayou/t-rex-runner)
 
-This is an updated version of the t-rex-runner game, originally extracted by [wayou/t-rex-runner](https://github.com/wayou/t-rex-runner)
+[Source](https://cs.chromium.org/chromium/src/components/neterror/resources/offline.js) from chromium
 
-[source](https://cs.chromium.org/chromium/src/components/neterror/resources/offline.js) from chromium
+You can find a online version at https://H-Sofie.github.io/MaoDie-Runner/
 
-You can find a online version at https://litetex.github.io/t-rex-runner/
-
-![demo dino](dino.gif)
+![Original demo dino](dino.gif)
 
 ## How to run it
 
-Unfortunately it's only possible to run the code on a webserver.<br/>
-You can find the exact reason [here](https://stackoverflow.com/questions/48753691/cannot-access-cssrules-from-local-css-file-in-chrome-64)
-
-A simple predefined image exists at [DockerHub](https://hub.docker.com/r/litetex/t-rex-runner)
-
-However here is a quick setup if you wan't to build it yourself using docker
-* Get Docker
-* Build it with
-```SHELL
-docker build -t my-trex-runner-demo .
-```
-* Start it with 
-```SHELL
-docker run --rm -it --name trex-runner-demo -p 8080:80 my-trex-runner-demo
-```
-* Open http://localhost:8080
-* Shutdown the server/container with ``Ctrl + C`` or by running
-```SHELL
-docker rm -f trex-runner-demo
-```
-
-All in one:
-```SHELL
-docker build -t my-trex-runner-demo . && docker run --rm -it --name trex-runner-demo -p 8080:80 my-trex-runner-demo
-```
+Unfortunately it's only possible to run the code on a webserver.  
+You can find the [exact reason](https://stackoverflow.com/questions/48753691/cannot-access-cssrules-from-local-css-file-in-chrome-64)
 
 ## How to extract the required code
-* Clone the [chromium repo](https://chromium.googlesource.com/chromium/src)<br/>
-  * Chromium is a really large repo (as of now it has nearly 1 million Commits and the default branch with only the latest commits alone consumes 4GB of disk memory) so you should clone it only optimized: 
-  ```
+* Clone the [chromium repo](https://chromium.googlesource.com/chromium/src)
+  * Chromium is a really large repo (as of now it has nearly 1 million Commits and the default branch with only the latest commits alone consumes 4GB of disk memory) so you should clone it only optimized:
+  ```bash
   git clone --depth 1 --branch master https://chromium.googlesource.com/chromium/src
   ```
 * Check the dependencies of the [neterror component html page](https://source.chromium.org/chromium/chromium/src/+/master:components/neterror/resources/neterror.html)
