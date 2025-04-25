@@ -57,11 +57,6 @@ function Runner(outerContainerId, opt_config) {
 
   // Sound FX.
   this.audioBuffer = null;
-  /** @type {Object} */
-  this.soundFx = {};
-
-  // Global web audio context for playing sounds.
-  this.audioContext = null;
 
   // Images.
   this.images = {};
@@ -126,7 +121,6 @@ Runner.config = {
   MAX_SPEED: 13,
   MIN_JUMP_HEIGHT: 35,
   MOBILE_SPEED_COEFFICIENT: 1.2,
-  RESOURCE_TEMPLATE_ID: 'audio-resources',
   SPEED: 6,
   SPEED_DROP_COEFFICIENT: 3,
   ARCADE_MODE_INITIAL_TOP_POSITION: 35,
@@ -289,26 +283,7 @@ Runner.prototype = {
   /**
    * Load and decode base 64 encoded sounds.
    */
-  loadSounds() {
-    if (!IS_IOS) {
-      this.audioContext = new AudioContext();
-
-      const resourceTemplate =
-          document.getElementById(this.config.RESOURCE_TEMPLATE_ID).content;
-
-      for (const sound in Runner.sounds) {
-        let soundSrc =
-            resourceTemplate.getElementById(Runner.sounds[sound]).src;
-        soundSrc = soundSrc.substr(soundSrc.indexOf(',') + 1);
-        const buffer = decodeBase64ToArrayBuffer(soundSrc);
-
-        // Async, so no guarantee of order in array.
-        this.audioContext.decodeAudioData(buffer, function(index, audioData) {
-            this.soundFx[index] = audioData;
-          }.bind(this, sound));
-      }
-    }
-  },
+  loadSounds() { /* no-op */ },
 
   /**
    * Sets the game speed. Adjust the speed accordingly if on a smaller screen.
