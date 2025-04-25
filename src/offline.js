@@ -572,7 +572,7 @@ Runner.prototype = {
           Math.ceil(this.distanceRan));
 
       if (playAchievementSound) {
-        this.playSound(this.soundFx.SCORE);
+        this.playSound(Runner.sounds.SCORE);
       }
 
       // Night mode.
@@ -699,7 +699,7 @@ Runner.prototype = {
           }
           // Start jump.
           if (!this.tRex.jumping && !this.tRex.ducking) {
-            this.playSound(this.soundFx.BUTTON_PRESS);
+            this.playSound(Runner.sounds.BUTTON_PRESS);
             this.tRex.startJump(this.currentSpeed);
           }
         } else if (this.playing && Runner.keycodes.DUCK[e.keyCode]) {
@@ -932,7 +932,7 @@ Runner.prototype = {
    * Game over state.
    */
   gameOver() {
-    this.playSound(this.soundFx.HIT);
+    this.playSound(Runner.sounds.HIT);
     vibrate(200);
 
     this.stop();
@@ -993,7 +993,7 @@ Runner.prototype = {
       this.distanceMeter.reset();
       this.horizon.reset();
       this.tRex.reset();
-      this.playSound(this.soundFx.BUTTON_PRESS);
+      this.playSound(Runner.sounds.BUTTON_PRESS);
       this.invert(true);
       this.bdayFlashTimer = null;
       this.update();
@@ -1056,15 +1056,17 @@ Runner.prototype = {
   },
 
   /**
-   * Play a sound.
-   * @param {AudioBuffer} soundBuffer
+   * Play a sound (HTMLAudioElement version).
+   * @param {string} soundId  ── id attribute of the <audio> tag
    */
-  playSound(soundBuffer) {
-    if (soundBuffer) {
-      const sourceNode = this.audioContext.createBufferSource();
-      sourceNode.buffer = soundBuffer;
-      sourceNode.connect(this.audioContext.destination);
-      sourceNode.start(0);
+  playSound(soundId) {
+    const el = document.getElementById(soundId);
+    if (!el) return;
+    try {
+      el.currentTime = 0;
+      el.play();
+    } catch (err) {
+      console.warn('Sound blocked:', err);
     }
   },
 
