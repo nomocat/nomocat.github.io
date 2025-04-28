@@ -55,9 +55,6 @@ function Runner(outerContainerId, opt_config) {
 
   this.playCount = 0;
 
-  // Sound FX.
-  this.audioBuffer = null;
-
   // Images.
   this.images = {};
   this.imagesLoaded = 0;
@@ -160,28 +157,28 @@ Runner.classes = {
  */
 Runner.spriteDefinition = {
   LDPI: {
-    CACTUS_LARGE: {x: 332, y: 2},
-    CACTUS_SMALL: {x: 228, y: 2},
-    CLOUD: {x: 86, y: 2},
-    HORIZON: {x: 2, y: 54},
-    MOON: {x: 484, y: 2},
-    PTERODACTYL: {x: 134, y: 2},
-    RESTART: {x: 2, y: 2},
-    TEXT_SPRITE: {x: 655, y: 2},
-    TREX: {x: 848, y: 2},
-    STAR: {x: 645, y: 2}
+    CACTUS_LARGE: {x: 3320, y: 20}, // 大仙人掌
+    CACTUS_SMALL: {x: 2280, y: 20}, // 小仙人掌
+    CLOUD: {x: 860, y: 20}, // 云
+    HORIZON: {x: 20, y: 540}, // 地平线
+    MOON: {x: 4840, y: 20}, // 月
+    PTERODACTYL: {x: 1340, y: 20}, // 鸟
+    RESTART: {x: 20, y: 20}, // 重开
+    TEXT_SPRITE: {x: 6550, y: 20}, // 文字&数字
+    TREX: {x: 8480, y: 20}, // 恐龙
+    STAR: {x: 6450, y: 20} // 星
   },
   HDPI: {
-    CACTUS_LARGE: {x: 652, y: 2},
-    CACTUS_SMALL: {x: 446, y: 2},
-    CLOUD: {x: 166, y: 2},
-    HORIZON: {x: 2, y: 104},
-    MOON: {x: 954, y: 2},
-    PTERODACTYL: {x: 260, y: 2},
-    RESTART: {x: 2, y: 2},
-    TEXT_SPRITE: {x: 1294, y: 2},
-    TREX: {x: 1678, y: 2},
-    STAR: {x: 1276, y: 2}
+    CACTUS_LARGE: {x: 6520, y: 20},
+    CACTUS_SMALL: {x: 4460, y: 20},
+    CLOUD: {x: 1660, y: 20},
+    HORIZON: {x: 20, y: 1040},
+    MOON: {x: 9540, y: 20},
+    PTERODACTYL: {x: 2600, y: 20},
+    RESTART: {x: 20, y: 20},
+    TEXT_SPRITE: {x: 12940, y: 20},
+    TREX: {x: 16780, y: 20},
+    STAR: {x: 12760, y: 20}
   }
 };
 
@@ -1256,12 +1253,21 @@ GameOverPanel.prototype = {
     const restartTargetY = this.canvasDimensions.HEIGHT / 2;
 
     if (IS_HIDPI) {
-      textSourceY *= 2;
-      textSourceX *= 2;
-      textSourceWidth *= 2;
-      textSourceHeight *= 2;
-      restartSourceWidth *= 2;
-      restartSourceHeight *= 2;
+      textSourceY *= 20;
+      textSourceX *= 20;
+      textSourceWidth *= 20;
+      textSourceHeight *= 20;
+      restartSourceWidth *= 20;
+      restartSourceHeight *= 20;
+    }
+    // Test range.
+    else {
+      textSourceY *= 10;
+      textSourceX *= 10;
+      textSourceWidth *= 10;
+      textSourceHeight *= 10;
+      restartSourceWidth *= 10;
+      restartSourceHeight *= 10;
     }
 
     textSourceX += this.textImgPos.x;
@@ -1525,8 +1531,13 @@ Obstacle.prototype = {
     let sourceHeight = this.typeConfig.height;
 
     if (IS_HIDPI) {
-      sourceWidth = sourceWidth * 2;
-      sourceHeight = sourceHeight * 2;
+      sourceWidth = sourceWidth * 20;
+      sourceHeight = sourceHeight * 20;
+    }
+    // Test range.
+    else {
+      sourceWidth = sourceWidth * 10;
+      sourceHeight = sourceHeight * 10;
     }
 
     // X position in sprite.
@@ -1898,10 +1909,17 @@ Trex.prototype = {
     const outputHeight = sourceHeight;
 
     if (IS_HIDPI) {
-      sourceX *= 2;
-      sourceY *= 2;
-      sourceWidth *= 2;
-      sourceHeight *= 2;
+      sourceX *= 20;
+      sourceY *= 20;
+      sourceWidth *= 20;
+      sourceHeight *= 20;
+    }
+    // Test range.
+    else {
+      sourceX *= 10;
+      sourceY *= 10;
+      sourceWidth *= 10;
+      sourceHeight *= 10;
     }
 
     // Adjustments for sprite sheet position.
@@ -2181,9 +2199,15 @@ DistanceMeter.prototype = {
 
     // For high DPI we 2x source values.
     if (IS_HIDPI) {
-      sourceWidth *= 2;
-      sourceHeight *= 2;
-      sourceX *= 2;
+      sourceWidth *= 20;
+      sourceHeight *= 20;
+      sourceX *= 20;
+    }
+    // Test range.
+    else {
+      sourceWidth *= 10;
+      sourceHeight *= 10;
+      sourceX *= 10;
     }
 
     sourceX += this.spritePos.x;
@@ -2509,8 +2533,13 @@ Cloud.prototype = {
     const outputWidth = sourceWidth;
     const outputHeight = sourceHeight;
     if (IS_HIDPI) {
-      sourceWidth = sourceWidth * 2;
-      sourceHeight = sourceHeight * 2;
+      sourceWidth = sourceWidth * 20;
+      sourceHeight = sourceHeight * 20;
+    }
+    // Test range.
+    else {
+      sourceWidth = sourceWidth * 10;
+      sourceHeight = sourceHeight * 10;
     }
 
     this.canvasCtx.drawImage(Runner.imageSprite, this.spritePos.x,
@@ -2648,11 +2677,20 @@ NightMode.prototype = {
     let starSourceX = Runner.spriteDefinition.LDPI.STAR.x;
 
     if (IS_HIDPI) {
-      moonSourceWidth *= 2;
-      moonSourceHeight *= 2;
+      moonSourceWidth *= 20;
+      moonSourceHeight *= 20;
       moonSourceX = this.spritePos.x +
-          (NightMode.phases[this.currentPhase] * 2);
-      starSize *= 2;
+          (NightMode.phases[this.currentPhase] * 20);
+      starSize *= 20;
+      starSourceX = Runner.spriteDefinition.HDPI.STAR.x;
+    }
+    // Test range.
+    else {
+      moonSourceWidth *= 10;
+      moonSourceHeight *= 10;
+      moonSourceX = this.spritePos.x +
+          (NightMode.phases[this.currentPhase] * 10);
+      starSize *= 10;
       starSourceX = Runner.spriteDefinition.HDPI.STAR.x;
     }
 
@@ -2689,12 +2727,13 @@ NightMode.prototype = {
       this.stars[i].x = getRandomNum(segmentSize * i, segmentSize * (i + 1));
       this.stars[i].y = getRandomNum(0, NightMode.config.STAR_MAX_Y);
 
+      // Test range.
       if (IS_HIDPI) {
         this.stars[i].sourceY = Runner.spriteDefinition.HDPI.STAR.y +
-            NightMode.config.STAR_SIZE * 2 * i;
+            NightMode.config.STAR_SIZE * 20 * i;
       } else {
         this.stars[i].sourceY = Runner.spriteDefinition.LDPI.STAR.y +
-            NightMode.config.STAR_SIZE * i;
+            NightMode.config.STAR_SIZE * 10 * i;
       }
     }
   },
@@ -2755,11 +2794,11 @@ HorizonLine.prototype = {
       if (IS_HIDPI) {
         if (dimension !== 'YPOS') {
           this.sourceDimensions[dimension] =
-              HorizonLine.dimensions[dimension] * 2;
+              HorizonLine.dimensions[dimension] * 20;
         }
       } else {
         this.sourceDimensions[dimension] =
-            HorizonLine.dimensions[dimension];
+            HorizonLine.dimensions[dimension] * 10; // Test range.
       }
       this.dimensions[dimension] = HorizonLine.dimensions[dimension];
     }
